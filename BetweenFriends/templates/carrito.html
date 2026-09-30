@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Between Friends — Carrito</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='stylescarrito.css') }}">
+</head>
+<body>
+
+  <header class="header">
+    <div class="menu-panel" id="menuPanel">
+      <button class="menu-item-back" type="button" onclick="toggleMenu()" aria-label="Cerrar menú">
+        <img src="{{ url_for('static', filename='imagenes/backarrow.png') }}" alt="Volver" width="50" height="50">
+      </button>
+      <a class="menu-item menu-item-comidas" href="{{ url_for('comidas') }}">COMIDAS</a>
+      <a class="menu-item menu-item-postres" href="{{ url_for('postres') }}">POSTRES</a>
+      <a class="menu-item menu-item-bebidas" href="{{ url_for('bebidas') }}">BEBIDAS</a>
+      <a class="menu-item menu-item-info" href="{{ url_for('info') }}">INFO</a>
+    </div>
+  </header>
+
+  <div class="phone-frame">
+    <div class="phone-screen">
+
+      <nav class="navbar" id="navbar">
+        <button class="menu-btn" type="button" aria-label="Abrir menú" onclick="toggleMenu()">
+          <i class="ti ti-menu-2"></i>
+        </button>
+
+        <a class="logo-wrap" href="{{ url_for('inicio') }}" aria-label="Ir al inicio">
+          <img src="{{ url_for('static', filename='imagenes/logo between friends.png') }}"
+               alt="Logo Between Friends" class="logo-img">
+        </a>
+
+        <a class="cart-btn" href="{{ url_for('carrito') }}" aria-label="Carrito">
+          <i class="ti ti-shopping-cart"></i>
+          {% if carrito_cantidad > 0 %}
+            <span class="cart-badge visible">{{ carrito_cantidad }}</span>
+          {% else %}
+            <span class="cart-badge">0</span>
+          {% endif %}
+        </a>
+      </nav>
+
+      <div class="header-bar">
+        <h1>Carrito</h1>
+      </div>
+
+      <main class="content carrito-content">
+        {% with mensajes = get_flashed_messages(with_categories=true) %}
+          {% if mensajes %}
+            <div class="mensajes">
+              {% for categoria, mensaje in mensajes %}
+                <div class="mensaje {{ categoria }}">{{ mensaje }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        {% if items %}
+          <div class="carrito-lista">
+            {% for item in items %}
+              <article class="carrito-item">
+                <div>
+                  <h2>{{ item.producto["nombreProduc"] }}</h2>
+                  <p>Precio: ${{ "%.2f"|format(item.producto["precio"] or 0) }}</p>
+                  <p>Cantidad: {{ item.cantidad }}</p>
+                  <strong>Subtotal: ${{ "%.2f"|format(item.subtotal) }}</strong>
+                </div>
+
+                <!-- Quita una unidad sin depender de JavaScript. -->
+                <form action="{{ url_for('quitar_del_carrito', producto_id=item.producto['id']) }}" method="post">
+                  <button class="btn info" type="submit">QUITAR 1</button>
+                </form>
+              </article>
+            {% endfor %}
+          </div>
+
+          <div class="carrito-total">
+            <h2>Total: ${{ "%.2f"|format(total) }}</h2>
+
+            <form action="{{ url_for('vaciar_carrito') }}" method="post">
+              <button class="btn info" type="submit">VACIAR CARRITO</button>
+            </form>
+          </div>
+
+          <section class="pedido-form">
+            <h2>Datos del pedido</h2>
+
+            <form action="{{ url_for('finalizar_pedido') }}" method="post">
+              <label for="nombre">Nombre</label>
+              <input id="nombre" name="nombre" type="text" required>
+
+              <label for="telefono">Teléfono</label>
+              <input id="telefono" name="telefono" type="tel" required>
+
+              <button class="btn add" type="submit">CONFIRMAR PEDIDO</button>
+            </form>
+          </section>
+        {% else %}
+          <div class="carrito-vacio">
+            <h2>Tu carrito está vacío</h2>
+            <p>Volvé al menú y agregá algún producto.</p>
+            <a class="inicio-btn" href="{{ url_for('promos') }}">VER PROMOS</a>
+          </div>
+        {% endif %}
+      </main>
+
+    </div>
+  </div>
+
+  <script>
+    // Abre/cierra el menú lateral.
+    function toggleMenu() {
+      const panel = document.getElementById('menuPanel');
+      const navbar = document.getElementById('navbar');
+
+      panel.classList.toggle('visible');
+      navbar.classList.toggle('oculto');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Between Friends — inicio</title>
+
+  <!-- Flask genera la URL correcta para cualquier entorno. -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='stylesinicio.css') }}">
+</head>
+<body>
+  <header class="hero" role="banner" aria-label="Pantalla de entrada Between Friends">
+    <div class="overlay"></div>
+
+    <div class="hero-content">
+      <div class="logo-wrap">
+        <img src="{{ url_for('static', filename='imagenes/logo between friends.png') }}"
+             alt="Logo Between Friends" class="logo-img">
+      </div>
+
+      <nav class="hero-actions" role="navigation" aria-label="Acciones principales">
+        <!-- Antes apuntaban a promos.html/info.html; ahora apuntan a rutas Flask. -->
+        <a class="btn btn-primary" href="{{ url_for('promos') }}">ENTRAR</a>
+        <a class="btn btn-secondary" href="{{ url_for('info') }}">INFO</a>
+      </nav>
+    </div>
+
+    <footer class="hero-footer">
+      <p>Horario: Lun-sab 18:00 - 02:00</p>
+      <p>Horario: dom cerrado</p>
+      <p>Reservas: +54 9 358 3413265</p>
+    </footer>
+  </header>
+</body>
+</html>

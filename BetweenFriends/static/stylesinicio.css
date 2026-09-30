@@ -1,0 +1,143 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root{
+  --accent-red: #d62828;
+  --white: #ffffff;
+  --black: #111111;
+  --overlay: rgba(0,0,0,0.45);
+  --glass: rgba(255,255,255,0.85);
+  --font-sans: 'Montserrat', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+html,body{
+  height: 100%;
+  font-family: var(--font-sans);
+  color: var(--white);
+  background: #000;
+}
+
+.hero{
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url("imagenes/fondo\ de\ restobar.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero .overlay{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.6) 100%);
+  z-index: 0;
+}
+
+.hero-content{
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: center;
+  padding: 24px;
+  width: 100%;
+  max-width: 980px;
+}
+
+.logo-wrap{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-img{
+  width: 120px;
+  height: auto;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.6));
+  padding: 24px;
+  width: 56%; 
+}
+
+.logo-text{
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.side-label{
+  color: var(--accent-red);
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.brand{
+  color: var(--accent-red);
+  font-size: clamp(28px, 6vw, 56px);
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin: 0;
+  text-transform: none;
+  text-shadow: 0 6px 18px rgba(0,0,0,0.6);
+}
+
+.hero-actions{
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn{
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: transform .14s ease, box-shadow .14s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+.btn-primary{
+  background: var(--white);
+  color: var(--black);
+  border: 2px solid rgba(0,0,0,0.06);
+}
+
+.btn-secondary{
+  background: transparent;
+  color: var(--white);
+  border: 2px solid rgba(255,255,255,0.85);
+  backdrop-filter: blur(4px);
+}
+
+.btn:hover, .btn:focus{
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+  outline: none;
+}
+
+.hero-footer{
+  position: absolute;
+  bottom: 18px;
+  z-index: 2;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 520px){
+  .logo-img{ width: 425px; }
+  .brand{ font-size: 28px; }
+  .btn{ padding: 10px 18px; font-size: 0.95rem; }
+  .logo-text{ gap: 10px; }
+}

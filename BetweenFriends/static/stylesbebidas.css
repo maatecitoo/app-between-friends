@@ -1,0 +1,405 @@
+/* Fuente y colores base */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+:root {
+  --accent-red: #d62828;
+  --dark-bg: #000;
+  --light-gray: #ccc;
+  --white: #fff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+   background-image: url("/static/imagenes/fondo%20de%20restobar.png");
+  color: var(--white);
+  line-height: 1.5;
+}
+.menu-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 380px;
+  background-color: rgba(90, 90, 90, 0.95);
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-bottom-right-radius: 10px;
+  z-index: 10;
+
+  /* estado oculto por defecto */
+  transform: translateX(-100%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.menu-panel.visible {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.menu-item {
+  background-color: rgba(60, 60, 60, 0.9);
+  color: #fff;
+  font-family: 'Times New Roman', serif;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  border: none;
+  margin: 30px;
+  border-radius: 25px;
+  padding: 14px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.menu-item-back {
+  background-color: rgba(60, 60, 60, 0.9);
+  color: #fff;
+  font-family: 'Times New Roman', serif;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  margin: 0;
+  padding: 8px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-comida {
+  margin: 50px;
+}
+
+.menu-item:hover {
+  background-color: rgba(80, 80, 80, 0.9);
+}
+
+.menu-item-info {
+  margin-top: 150px;
+}
+
+.navbar {
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.navbar.oculto {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.navbar {
+  background-color: var(--negro);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid #222;
+   
+}
+
+.menu-btn,
+.cart-btn {
+  background: none;
+  border: none;
+  color: var(--blanco);
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.menu-btn:hover,
+.cart-btn:hover {
+  background: rgb(255, 0, 0);
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  padding: 1rem;
+  background-color: #000;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-img {
+  width: 52.90px;
+  height: 70px;
+}
+
+.side-text {
+  color: var(--light-gray);
+  font-weight: bold;
+}
+
+/* Promos */
+.promos {
+  padding: 1rem;
+  text-align: center;
+}
+
+.header h2 {
+  color: var(--accent-red);
+  margin-bottom: 1rem;
+}
+
+.promo-item {
+  margin-bottom: 2rem;
+}
+
+.promo-item img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.promo-info {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 0.5rem;
+}
+
+.btn {
+  flex: 1;
+  margin: 0.3rem;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn.info {
+  background-color: var(--light-gray);
+  color: var(--dark-bg);
+}
+
+.btn.add {
+  background-color: var(--accent-red);
+  color: var(--white);
+}
+
+/* Footer */
+.footer {
+  background-color: #111;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+/* 📱 Mobile-first: botones táctiles full-width */
+@media (max-width: 768px) {
+  .promo-info {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+  
+}
+
+/* 💻 Desktop: layout horizontal */
+@media (min-width: 769px) {
+  .promos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .promo-item img {
+    height: 250px;
+    object-fit: cover;
+  }
+  
+}
+
+.promo-info {
+  display: none;
+}
+
+/* Se muestra solo cuando tiene la clase .visible */
+.promo-info.visible {
+  display: block;
+}
+
+
+
+/* ---------------------------------------------------------------
+   Ajustes agregados para las plantillas Flask
+   --------------------------------------------------------------- */
+.menu-panel a {
+  text-decoration: none;
+  display: block;
+}
+
+.menu-item-back {
+  display: flex;
+}
+
+.promo-botones {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.promo-botones form {
+  flex: 1;
+  display: flex;
+}
+
+.promo-botones form .btn {
+  width: 100%;
+}
+
+.producto-imagen {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.producto-sin-imagen {
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 8px;
+  padding: 1.5rem;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.producto-sin-imagen h3 {
+  font-size: 1.2rem;
+}
+
+.sin-productos {
+  background: rgba(0, 0, 0, 0.65);
+  border-radius: 12px;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.carrito-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.carrito-item {
+  background: rgba(255, 255, 255, 0.92);
+  color: #111;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.carrito-item h2,
+.carrito-total h2,
+.pedido-form h2 {
+  color: #111;
+  margin-bottom: 0.4rem;
+}
+
+.carrito-item p {
+  margin: 0.2rem 0;
+}
+
+.carrito-total,
+.pedido-form,
+.carrito-vacio {
+  background: rgba(255, 255, 255, 0.92);
+  color: #111;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.pedido-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pedido-form input {
+  padding: 0.7rem;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.mensaje {
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+  background: #eee;
+  color: #111;
+}
+
+.inicio-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .producto-imagen {
+    height: 200px;
+    object-fit: cover;
+  }
+  .promo-botones,
+  .carrito-item {
+    flex-direction: column;
+  }
+
+  .carrito-item .btn,
+  .carrito-item form {
+    width: 100%;
+  }
+}

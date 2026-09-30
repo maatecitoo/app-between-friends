@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Between Friends — Comidas</title>
+
+  <!-- Iconos de Tabler. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+  <!-- Cada HTML carga su CSS desde /static mediante url_for. -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='stylescomidas.css') }}">
+</head>
+<body>
+  <header class="header">
+    
+<div class="menu-panel" id="menuPanel">
+  <!-- Botón para cerrar el menú lateral. -->
+  <button class="menu-item-back" type="button" onclick="toggleMenu()" aria-label="Cerrar menú">
+    <img src="{{ url_for('static', filename='imagenes/backarrow.png') }}" alt="Volver" width="50" height="50">
+  </button>
+
+  <!-- Todas las opciones usan rutas Flask, no archivos .html directos. -->
+  <a class="menu-item menu-item-comidas" href="{{ url_for('comidas') }}">COMIDAS</a>
+  <a class="menu-item menu-item-postres" href="{{ url_for('postres') }}">POSTRES</a>
+  <a class="menu-item menu-item-bebidas" href="{{ url_for('bebidas') }}">BEBIDAS</a>
+  <a class="menu-item menu-item-info" href="{{ url_for('info') }}">INFO</a>
+</div>
+
+<nav class="navbar" id="navbar">
+  <!-- Un único onclick evita el error que tenía el HTML original. -->
+  <button class="menu-btn" type="button" aria-label="Abrir menú" onclick="toggleMenu()">
+    <i class="ti ti-menu-2"></i>
+  </button>
+
+  <a class="logo-wrap" href="{{ url_for('inicio') }}" aria-label="Ir al inicio">
+    <img src="{{ url_for('static', filename='imagenes/logo between friends.png') }}"
+         alt="Logo Between Friends" class="logo-img">
+  </a>
+
+  <a class="cart-btn" href="{{ url_for('carrito') }}" aria-label="Abrir carrito">
+    <i class="ti ti-shopping-cart"></i>
+    {% if carrito_cantidad > 0 %}
+      <span class="cart-badge visible">{{ carrito_cantidad }}</span>
+    {% else %}
+      <span class="cart-badge">0</span>
+    {% endif %}
+  </a>
+</nav>
+
+    <h2>COMIDAS</h2>
+  </header>
+
+  <main>
+    <section class="comidas">
+      {% if productos %}
+        {% for producto in productos %}
+        <article class="promo-item">
+          <!-- La imagen se toma de la columna "imagen" de la tabla productos. -->
+          {% if producto["imagen"] %}
+            <img
+              src="{{ url_for('static', filename=producto['imagen']) }}"
+              alt="{{ producto['nombreProduc'] }}"
+              class="producto-imagen"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            >
+            <div class="producto-sin-imagen" style="display: none;">
+              <h3>Imagen no disponible</h3>
+            </div>
+          {% else %}
+            <div class="producto-sin-imagen">
+              <h3>{{ producto["nombreProduc"] }}</h3>
+            </div>
+          {% endif %}
+
+          <div class="promo-info" id="info-{{ producto["id"] }}">
+            <p>{{ producto["descripcion"] or "Sin descripción disponible." }}</p>
+            <strong>${{ "%.2f"|format(producto["precio"] or 0) }}</strong>
+          </div>
+
+          <div class="promo-botones">
+            <button class="btn info" type="button"
+                    onclick="toggleInfo('{{ producto["id"] }}')">INFO</button>
+
+            <!-- El alta al carrito se hace por POST contra Flask. -->
+            <form action="{{ url_for('agregar_al_carrito', producto_id=producto['id']) }}"
+                  method="post">
+              <button class="btn add" type="submit">AÑADIR</button>
+            </form>
+          </div>
+        </article>
+        {% endfor %}
+      {% else %}
+        <!-- La DB que recibimos está vacía: mostramos un aviso en vez de fallar. -->
+        <div class="sin-productos">
+          <p>No hay productos cargados en esta categoría todavía.</p>
+          <p>Agregalos en la tabla <strong>productos</strong> de SQLite.</p>
+        </div>
+      {% endif %}
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Horario: Lun-sab 18:00 - 02:00</p>
+    <p>Horario: dom cerrado</p>
+    <p>Reservas: +54 9 358 3413265</p>
+  </footer>
+
+  <script>
+    // Abre y cierra el menú lateral.
+    function toggleMenu() {
+      const panel = document.getElementById('menuPanel');
+      const navbar = document.getElementById('navbar');
+
+      panel.classList.toggle('visible');
+      navbar.classList.toggle('oculto');
+    }
+
+    // Muestra u oculta la información de un producto.
+    function toggleInfo(id) {
+      const info = document.getElementById('info-' + id);
+
+      if (info) {
+        info.classList.toggle('visible');
+      }
+    }
+  </script>
+</body>
+</html>

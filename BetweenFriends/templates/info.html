@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Between Friends — Información</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='stylesinfo.css') }}">
+</head>
+<body>
+
+  <!-- Menú fuera del marco para que pueda aparecer sobre toda la pantalla. -->
+  <header class="header">
+    <div class="menu-panel" id="menuPanel">
+      <button class="menu-item-back" type="button" onclick="toggleMenu()" aria-label="Cerrar menú">
+        <img src="{{ url_for('static', filename='imagenes/backarrow.png') }}" alt="Volver">
+      </button>
+      <a class="menu-item menu-item-comidas" href="{{ url_for('comidas') }}">COMIDAS</a>
+      <a class="menu-item menu-item-postres" href="{{ url_for('postres') }}">POSTRES</a>
+      <a class="menu-item menu-item-bebidas" href="{{ url_for('bebidas') }}">BEBIDAS</a>
+      <a class="menu-item menu-item-info" href="{{ url_for('info') }}">INFO</a>
+    </div>
+  </header>
+
+  <div class="phone-frame">
+    <div class="phone-screen">
+
+      <nav class="navbar" id="navbar">
+        <button class="menu-btn" type="button" aria-label="Abrir menú" onclick="toggleMenu()">
+          <i class="ti ti-menu-2"></i>
+        </button>
+
+        <a class="logo-wrap" href="{{ url_for('inicio') }}" aria-label="Ir al inicio">
+          <img src="{{ url_for('static', filename='imagenes/logo between friends.png') }}"
+               alt="Logo Between Friends" class="logo-img">
+        </a>
+
+        <a class="cart-btn" href="{{ url_for('carrito') }}" aria-label="Abrir carrito">
+          <i class="ti ti-shopping-cart"></i>
+          {% if carrito_cantidad > 0 %}
+            <span class="cart-badge visible">{{ carrito_cantidad }}</span>
+          {% else %}
+            <span class="cart-badge">0</span>
+          {% endif %}
+        </a>
+      </nav>
+
+      <div class="header-bar">
+        <h1>Información</h1>
+      </div>
+
+      <main class="content">
+        <h2>Paso a paso:</h2>
+
+        <div class="steps">
+          <div class="step-item"><div class="step-dot dot-1"></div><div class="step-text"><span class="step-label">Paso 1:</span> Elegí tu producto favorito del menú</div></div>
+          <div class="step-item"><div class="step-dot dot-2"></div><div class="step-text"><span class="step-label">Paso 2:</span> Agregalo al carrito con el botón AÑADIR</div></div>
+          <div class="step-item"><div class="step-dot dot-3"></div><div class="step-text"><span class="step-label">Paso 3:</span> Revisá tu pedido en el carrito</div></div>
+          <div class="step-item"><div class="step-dot dot-4"></div><div class="step-text"><span class="step-label">Paso 4:</span> Completá tus datos de contacto</div></div>
+          <div class="step-item"><div class="step-dot dot-5"></div><div class="step-text"><span class="step-label">Paso 5:</span> Confirmá tu pedido</div></div>
+          <div class="step-item"><div class="step-dot dot-6"></div><div class="step-text"><span class="step-label">Paso 6:</span> Esperá la confirmación</div></div>
+        </div>
+
+        <!-- Se corrige el HTML inválido "nav=" que tenía el archivo original. -->
+        <div class="btn-wrap">
+          <a class="inicio-btn" href="{{ url_for('inicio') }}">INICIO</a>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <script>
+    // Controla el menú lateral.
+    function toggleMenu() {
+      const panel = document.getElementById('menuPanel');
+      const navbar = document.getElementById('navbar');
+
+      panel.classList.toggle('visible');
+      navbar.classList.toggle('oculto');
+    }
+  </script>
+</body>
+</html>
